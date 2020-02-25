@@ -2,10 +2,6 @@
 using Agenda.Domain.Contracts.Services;
 using Agenda.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Agenda.Business.Services
 {
@@ -33,9 +29,13 @@ namespace Agenda.Business.Services
             throw new NotImplementedException();
         }
 
-        public void Register(string name, string email, string cpf, string endereco, string telefone)
+        public void Register(string nome, string email, string cpf, string endereco, string telefone)
         {
-            throw new NotImplementedException();
+            var hasUser = GetByNome(nome);
+            if (hasUser != null)
+                throw new Exception("O contato já existe");
+            var user = new User(nome, cpf, telefone, email, endereco);
+            _repository.Create(user);
         }
         public void Dispose()
         {
